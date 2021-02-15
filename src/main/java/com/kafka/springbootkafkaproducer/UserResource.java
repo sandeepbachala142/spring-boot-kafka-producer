@@ -25,6 +25,11 @@ public class UserResource {
         return "Got it";
     }
 
+    @PostMapping("/newService")
+    public  String newService(){
+        return " This is next new service ";
+    }
+
 
 
 
