@@ -1,23 +1,32 @@
 package com.kafka.springbootkafkaproducer;
 
+import com.kafka.springbootkafkaproducer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("kafka")
 public class UserResource {
 
     @Autowired
-    KafkaTemplate<String,String> kafkaTemplate;
-    private static final String topic ="topic1";
+    KafkaTemplate<String,User> kafkaTemplate;
 
-    @GetMapping("/publish/{message}")
-    public String post(@PathVariable("message") final String message){
-        kafkaTemplate.send(topic,message);
+    private static final String topic ="TestTopic";
+
+    @GetMapping("/publish/{name}")
+    public String post(@PathVariable("name") final String name){
+        kafkaTemplate.send(topic,new User(name,30,5464));
         return  "Published Successfully";
     }
+
+    @PostMapping ("/test")
+    public String method(){
+        return "Got it";
+    }
+
+
+
+
+
 }
